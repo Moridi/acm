@@ -3,11 +3,14 @@
 
 #include <vector>
 
+class Feature;
+
 class FeatureModel
 {
 public:
 	FeatureModel() {}
 private:
+	std::vector<Feature*> features;
 };
 
 #include "FeatureModel-inl.h"

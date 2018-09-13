@@ -38,7 +38,6 @@ void Tools::fill_feature_model_vector(vector<string>& tokens, string line,
 char Tools::get_delimiter(string line)
 {
 	constexpr size_t SIZE = 3;
-	constexpr int DELIMITER_NOT_FOUND = -1;
 	constexpr std::array<char, SIZE> DELIMITERS = {'+', '|', '^'};
 
 	for (size_t i = 0; i < DELIMITERS.size(); ++i)
@@ -48,7 +47,7 @@ char Tools::get_delimiter(string line)
 	throw BAD_DELIMITER_EXCEPTION();
 }
 
-string Tools::make_compatible_string_for_configuration(string line)
+string Tools::make_compatible_string_for_configuration(string& line)
 {
 	constexpr size_t USELESS_OPEN_BRACKET_INDEX = 1;
 	constexpr size_t MINIMUM_SIZE = 2;
@@ -57,8 +56,37 @@ string Tools::make_compatible_string_for_configuration(string line)
 		throw BAD_CONFIGURAION_STYLE();
 
 	size_t useless_close_bracket_index = line.size() - MINIMUM_SIZE;
-
 	return line.substr(USELESS_OPEN_BRACKET_INDEX, useless_close_bracket_index);
+}
+
+string Tools::remove_question_mark(string name)
+{
+	constexpr size_t OPTIONAL_SIGN_INDEX = 1;
+
+	if (name.find(static_cast<char>(FeatureType::Optional)) == DELIMITER_NOT_FOUND)
+		return name;
+	return name.substr(OPTIONAL_SIGN_INDEX);
+
+}
+
+Tools::FeatureType Tools::get_feature_type(string name, char delimiter)
+{
+	switch (delimiter)
+	{
+		case static_cast<char>(FeatureType::Mandatory):
+			if (name.find(static_cast<char>(FeatureType::Optional)) == DELIMITER_NOT_FOUND)
+				return FeatureType::Mandatory;
+			return FeatureType::Optional;
+
+		case static_cast<char>(FeatureType::Alternative):
+			return FeatureType::Alternative;
+
+		case static_cast<char>(FeatureType::Or):
+			return FeatureType::Or;
+
+		default:
+			throw BAD_DELIMITER_EXCEPTION();
+	}
 }
 
 #endif
