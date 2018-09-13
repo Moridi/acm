@@ -4,19 +4,15 @@
 #include <vector>
 #include <string>
 
-#include "SubFeature.h"
+#include "Commons.h"
 
 class Feature
 {
 public:
-	inline Feature(std::string name_);
-	inline Feature(const Feature& feature);
-	inline void add_sub_feature(std::string sub_feature_name,
-			Commons::FeatureType sub_feature_type);
+	inline Feature(std::string name, Commons::FeatureType feature_type);
 
 public:
-	std::string name;
-	std::vector<SubFeature> sub_features;
+	std::pair<std::string, Commons::FeatureType> value;
 };
 
 #include "Feature-inl.h"

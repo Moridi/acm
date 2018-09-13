@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <string>
-#include "Feature.h"
 #include "Configuration.h"
+#include "Feature.h"
 
 class FeatureModel
 {
@@ -17,21 +17,20 @@ public:
 
 	void print_feature_model()
 	{
-		for (int i = 0; i < features.size(); ++i)
+		for (std::map<std::string, std::vector<Feature>>::iterator it=features.begin(); it!=features.end(); ++it)
 		{
-			Feature feature = features[i];
-			std::cout << "***** " << feature.name << std::endl;
-			for (int j = 0; j < feature.sub_features.size(); ++j)
+			std::vector<Feature> features = it->second;
+			std::cout << "***** " << it->first << " => \n";
+			for (int j = 0; j < features.size(); ++j)
 			{
-				SubFeature sub_feature = feature.sub_features[j];
-				std::cout << sub_feature.value.first << " " << static_cast<char>(sub_feature.value.second) << std::endl;
+				Feature feature = features[j];
+				std::cout << feature.value.first << " " << static_cast<char>(feature.value.second) << std::endl;
 			}
 		}
 	}
 
 private:
-	std::vector<Feature> features;
-	std::map<std::string, Feature> features_map;
+	std::map<std::string, std::vector<Feature>> features;
 };
 
 #include "FeatureModel-inl.h"

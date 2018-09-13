@@ -1,7 +1,6 @@
 #include "FeatureModel.h"
 
 #include "Commons.h"
-#include "Feature.h"
 
 using namespace std;
 
@@ -13,15 +12,15 @@ void FeatureModel::make_feature_model(string line) noexcept
 	{
 		char delimiter = Commons::get_delimiter(line);
 		fill_feature_model_vector(tokens, line, delimiter);
-		Feature parent_feature(tokens[PARENT_FEATURE_INDEX]);
+		std::vector<Feature> sub_features;
 
-		for (size_t sub_index = PARENT_FEATURE_INDEX + 1; sub_index < tokens.size(); ++sub_index)
+		for (size_t index = PARENT_FEATURE_INDEX + 1; index < tokens.size(); ++index)
 		{
-			string name = Commons::remove_question_mark(tokens[sub_index]);
-			parent_feature.add_sub_feature(name, Commons::get_feature_type(
-					tokens[sub_index], delimiter));
+			string name = Commons::remove_question_mark(tokens[index]);
+			sub_features.push_back(Feature(name, Commons::get_feature_type(
+					tokens[index], delimiter)));
 		}
-		features.push_back(parent_feature);
+		features[tokens[PARENT_FEATURE_INDEX]] = sub_features;
 	}
 	catch (BAD_DELIMITER_EXCEPTION)
 	{
