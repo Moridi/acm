@@ -17,10 +17,22 @@ std::string Configuration::make_compatible_string_for_configuration(std::string&
 	constexpr size_t MINIMUM_SIZE = 2;
 
 	if (line.size() < MINIMUM_SIZE)
-		throw BAD_CONFIGURAION_STYLE();
+		throw BAD_CONFIGURAION_STYLE_EXCEPTION();
 
 	size_t useless_close_bracket_index = line.size() - MINIMUM_SIZE;
 	return line.substr(USELESS_OPEN_BRACKET_INDEX, useless_close_bracket_index);
+}
+
+string Configuration::get_feature_name(size_t index) const
+{
+	if (index > configuration.size())
+		throw VECTOR_OUT_OF_SIZE_EXCEPTION();
+	return configuration[index];
+}
+
+size_t Configuration::get_size() const noexcept
+{
+	return configuration.size();
 }
 
 #endif

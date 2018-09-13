@@ -6,19 +6,19 @@
 #include <string>
 
 #include "FeatureModel.h"
+#include "Configuration.h"
 
 class AdvancedCoffeeMakers
 {
 public:
-	typedef std::shared_ptr<AdvancedCoffeeMakers> AcmSharedPointer;
+	typedef std::shared_ptr<AdvancedCoffeeMakers> AdvancedCoffeeMakersSharedPointer;
 
-	inline ~AdvancedCoffeeMakers() = default;
-	inline static AcmSharedPointer get_instance() noexcept;
-	void get_input() const noexcept;
+	inline static AdvancedCoffeeMakersSharedPointer get_instance() noexcept;
+	void process() const noexcept;
 
 private:
 	inline AdvancedCoffeeMakers() noexcept;
-	static AcmSharedPointer instance;
+	static AdvancedCoffeeMakersSharedPointer instance;
 };
 
 #include "AdvancedCoffeeMakers-inl.h"

@@ -2,6 +2,7 @@
 
 int main()
 {
-	AcmSharedPointer instance = AdvancedCoffeeMakers::get_instance();
-	instance->get_input();
+	AdvancedCoffeeMakersSharedPointer instance =
+			AdvancedCoffeeMakers::get_instance();
+	instance->process();
 }

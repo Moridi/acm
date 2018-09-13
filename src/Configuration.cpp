@@ -11,12 +11,13 @@ void Configuration::make_configuration(string line) noexcept
 	{
 		line = make_compatible_string_for_configuration(line);
 		Commons::tokenize(tokens, line, DELIMITER);
+		configuration = tokens;
 	}
 	catch (BAD_DELIMITER_EXCEPTION)
 	{
 		cerr << "No valid delimiter found!" << endl;
 	}
-	catch (BAD_CONFIGURAION_STYLE)
+	catch (BAD_CONFIGURAION_STYLE_EXCEPTION)
 	{
 		cerr << "Invalid configuraion style!" << endl;
 	}

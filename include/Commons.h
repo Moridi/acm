@@ -6,7 +6,8 @@
 #include <string>
 
 class BAD_DELIMITER_EXCEPTION{};
-class BAD_CONFIGURAION_STYLE{};
+class BAD_CONFIGURAION_STYLE_EXCEPTION{};
+class VECTOR_OUT_OF_SIZE_EXCEPTION{};
 
 class Commons
 {

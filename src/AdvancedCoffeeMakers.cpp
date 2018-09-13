@@ -3,14 +3,11 @@
 #include <iostream>
 #include <string>
 
-#include "FeatureModel.h"
-#include "Configuration.h"
-
 using namespace std;
 
-AcmSharedPointer AdvancedCoffeeMakers::instance;
+AdvancedCoffeeMakersSharedPointer AdvancedCoffeeMakers::instance;
 
-void AdvancedCoffeeMakers::get_input() const noexcept
+void AdvancedCoffeeMakers::process() const noexcept
 {
 	constexpr char FEATURE_MODEL_END[] = "#";
 	constexpr char TEST_CASE_END[] = "##";
@@ -31,6 +28,14 @@ void AdvancedCoffeeMakers::get_input() const noexcept
 		{
 			Configuration configuration;
 			configuration.make_configuration(line);
+			try
+			{
+				feature_model.is_valid_configuration(configuration);
+			}
+			catch(VECTOR_OUT_OF_SIZE_EXCEPTION)
+			{
+				cerr << "Segmentation fault!" << endl;
+			}
 		}
 	}
 }

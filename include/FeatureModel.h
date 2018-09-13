@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include "Feature.h"
+#include "Configuration.h"
 
 class FeatureModel
 {
@@ -12,6 +13,7 @@ public:
 	void make_feature_model(std::string line) noexcept;
 	inline void fill_feature_model_vector(std::vector<std::string>& tokens,
 			std::string line, const char delimiter) noexcept;
+	inline bool is_valid_configuration(const Configuration& configuration) const noexcept;
 
 	void print_feature_model()
 	{
@@ -29,6 +31,7 @@ public:
 
 private:
 	std::vector<Feature> features;
+	std::map<std::string, Feature> features_map;
 };
 
 #include "FeatureModel-inl.h"

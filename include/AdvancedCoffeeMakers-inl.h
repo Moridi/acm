@@ -7,13 +7,13 @@
 
 #include <memory>
 
-typedef std::shared_ptr<AdvancedCoffeeMakers> AcmSharedPointer;
+typedef std::shared_ptr<AdvancedCoffeeMakers> AdvancedCoffeeMakersSharedPointer;
 
 AdvancedCoffeeMakers::AdvancedCoffeeMakers() noexcept
 {
 }
 
-AcmSharedPointer AdvancedCoffeeMakers::get_instance() noexcept
+AdvancedCoffeeMakersSharedPointer AdvancedCoffeeMakers::get_instance() noexcept
 {
 	if(instance == nullptr)
 		instance = std::make_shared<AdvancedCoffeeMakers>(AdvancedCoffeeMakers());

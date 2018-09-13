@@ -10,6 +10,7 @@ class Feature
 {
 public:
 	inline Feature(std::string name_);
+	inline Feature(const Feature& feature);
 	inline void add_sub_feature(std::string sub_feature_name,
 			Commons::FeatureType sub_feature_type);
 

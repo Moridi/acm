@@ -10,6 +10,13 @@ Feature::Feature(std::string name_)
 {
 }
 
+Feature::Feature(const Feature& feature)
+: name(feature.name)
+, sub_features(feature.sub_features)
+{
+
+}
+
 void Feature::add_sub_feature(std::string sub_feature_name,
 		Commons::FeatureType sub_feature_type)
 {
