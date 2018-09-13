@@ -1,60 +1,69 @@
+#include "AdvancedCoffeeMakers.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
 
 #include <bits/stdc++.h>
 
-#include "AdvancedCoffeeMakers.h"
+#include "Tools.h"
 
 using namespace std;
 
 AcmSharedPointer AdvancedCoffeeMakers::instance;
 
-void fill_vector(vector<string>& tokens, string line, const char delimiter)
+void AdvancedCoffeeMakers::make_feature_model(string line) const noexcept
 {
-	stringstream string_stream(line);
-	string intermediate;
-	while (getline(string_stream, intermediate, delimiter))
-		tokens.push_back(intermediate);
+	try
+	{
+		vector<string> tokens;
+		char delimiter = Tools::get_delimiter(line);
+		Tools::fill_feature_model_vector(tokens, line, delimiter);
+		tokens.clear();
+	}
+	catch (BAD_DELIMITER_EXCEPTION)
+	{
+		cerr << "No valid delimiter found!" << endl;
+	}
 }
 
-void AdvancedCoffeeMakers::tokenize(vector<string>& tokens, string line, const char delimiter)
-		const noexcept
+void AdvancedCoffeeMakers::make_configuration(string line) const noexcept
 {
-	constexpr char ASSIGN_DELIMITER = '=';
-	constexpr uint8_t RIGHT_VALUE_INDEX = 1;
+	constexpr char DELIMITER = ',';
 
-	fill_vector(tokens, line, ASSIGN_DELIMITER);
-	line = tokens[RIGHT_VALUE_INDEX];
-	tokens.erase(tokens.begin() + RIGHT_VALUE_INDEX);
-	fill_vector(tokens, line, delimiter);
-
-	for (int i = 0; i < tokens.size(); ++i)
-		cout << tokens[i] << " ";
-	cout << endl;
-}
-
-char AdvancedCoffeeMakers::get_delimiter(string line) const
-{
-	constexpr int SIZE = 3;
-
-	constexpr std::array<char, SIZE> DELIMITERS = {'+', '|', '^'};
-
-	for (size_t i = 0; i < DELIMITERS.size(); ++i)
-		if (line.find(DELIMITERS[i]) != -1)
-			return DELIMITERS[i];
+	try
+	{
+		line = Tools::make_compatible_string_for_configuration(line);
+		vector<string> tokens;
+		Tools::tokenize(tokens, line, DELIMITER);
+		tokens.clear();
+	}
+	catch (BAD_DELIMITER_EXCEPTION)
+	{
+		cerr << "No valid delimiter found!" << endl;
+	}
+	catch (BAD_CONFIGURAION_STYLE)
+	{
+		cerr << "Invalid configuraion style!" << endl;
+	}
 }
 
 void AdvancedCoffeeMakers::get_input() const noexcept
 {
 	constexpr char FEATURE_MODEL_END[] = "#";
+	constexpr char TEST_CASE_END[] = "##";
+	int number_of_test_cases;
 	string line;
-	vector<string> tokens;
 
-	while ((cin >> line) && (line != FEATURE_MODEL_END))
+	cout << "Please enter number of test cases : " << endl;
+	cin >> number_of_test_cases;
+
+	for (size_t i = 0; i < number_of_test_cases; ++i)
 	{
-		char delimiter = get_delimiter(line);
-		tokenize(tokens, line, delimiter);
-		tokens.clear();
+		while ((cin >> line) && (line != FEATURE_MODEL_END))
+			make_feature_model(line);
+		while ((cin >> line) && (line != TEST_CASE_END))
+			make_configuration(line);
+
 	}
 }

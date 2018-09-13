@@ -10,12 +10,11 @@ class AdvancedCoffeeMakers
 public:
 	typedef std::shared_ptr<AdvancedCoffeeMakers> AcmSharedPointer;
 
-	~AdvancedCoffeeMakers() = default;
+	inline ~AdvancedCoffeeMakers() = default;
 	inline static AcmSharedPointer get_instance() noexcept;
 	void get_input() const noexcept;
-	char get_delimiter(std::string line) const;
-	void tokenize(std::vector<std::string>& tokens, std::string line, const char delimiter)
-			const noexcept;
+	void make_feature_model(std::string line) const noexcept;
+	void make_configuration(std::string line) const noexcept;
 
 private:
 	inline AdvancedCoffeeMakers() noexcept;
