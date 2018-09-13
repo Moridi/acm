@@ -4,15 +4,15 @@
 #include <vector>
 #include <string>
 
-#include "Tools.h"
+#include "Commons.h"
 
 class SubFeature
 {
 public:
-	inline SubFeature(std::string name, Tools::FeatureType feature_type);
+	inline SubFeature(std::string name, Commons::FeatureType feature_type);
 
 public:
-	std::pair<std::string, Tools::FeatureType> value;
+	std::pair<std::string, Commons::FeatureType> value;
 };
 
 #include "SubFeature-inl.h"

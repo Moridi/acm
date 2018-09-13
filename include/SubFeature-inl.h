@@ -5,9 +5,9 @@
 #error "SubFeature-inl.h" should be included only in "SubFeature.h" file.
 #endif
 
-SubFeature::SubFeature(std::string name, Tools::FeatureType feature_type)
+SubFeature::SubFeature(std::string name, Commons::FeatureType feature_type)
 {
-	value = std::pair<std::string, Tools::FeatureType> (name, feature_type);
+	value = std::pair<std::string, Commons::FeatureType> (name, feature_type);
 }
 
 #endif

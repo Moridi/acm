@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+#include "FeatureModel.h"
+
 class AdvancedCoffeeMakers
 {
 public:
@@ -13,8 +15,6 @@ public:
 	inline ~AdvancedCoffeeMakers() = default;
 	inline static AcmSharedPointer get_instance() noexcept;
 	void get_input() const noexcept;
-	void make_feature_model(std::string line) const noexcept;
-	void make_configuration(std::string line) const noexcept;
 
 private:
 	inline AdvancedCoffeeMakers() noexcept;

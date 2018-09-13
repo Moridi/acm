@@ -1,8 +1,8 @@
-#ifndef TOOLS_INL_H_
-#define TOOLS_INL_H_
+#ifndef COMMONS_INL_H_
+#define COMMONS_INL_H_
 
-#ifndef TOOLS_H_
-#error "Tools-inl.h" should be included only in "Tools.h" file.
+#ifndef COMMONS_H_
+#error "Commons-inl.h" should be included only in "Commons.h" file.
 #endif
 
 #include <memory>
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void Tools::tokenize(vector<string>& tokens, string line, const char delimiter)
+void Commons::tokenize(vector<string>& tokens, string line, const char delimiter)
 		noexcept
 {
 	stringstream string_stream(line);
@@ -23,19 +23,7 @@ void Tools::tokenize(vector<string>& tokens, string line, const char delimiter)
 		tokens.push_back(intermediate);
 }
 
-void Tools::fill_feature_model_vector(vector<string>& tokens, string line,
-		const char delimiter) noexcept
-{
-	constexpr char ASSIGN_DELIMITER = '=';
-	constexpr uint8_t RIGHT_VALUE_INDEX = 1;
-
-	tokenize(tokens, line, ASSIGN_DELIMITER);
-	line = tokens[RIGHT_VALUE_INDEX];
-	tokens.erase(tokens.begin() + RIGHT_VALUE_INDEX);
-	tokenize(tokens, line, delimiter);
-}
-
-char Tools::get_delimiter(string line)
+char Commons::get_delimiter(string line)
 {
 	constexpr size_t SIZE = 3;
 	constexpr std::array<char, SIZE> DELIMITERS = {'+', '|', '^'};
@@ -47,19 +35,7 @@ char Tools::get_delimiter(string line)
 	throw BAD_DELIMITER_EXCEPTION();
 }
 
-string Tools::make_compatible_string_for_configuration(string& line)
-{
-	constexpr size_t USELESS_OPEN_BRACKET_INDEX = 1;
-	constexpr size_t MINIMUM_SIZE = 2;
-
-	if (line.size() < MINIMUM_SIZE)
-		throw BAD_CONFIGURAION_STYLE();
-
-	size_t useless_close_bracket_index = line.size() - MINIMUM_SIZE;
-	return line.substr(USELESS_OPEN_BRACKET_INDEX, useless_close_bracket_index);
-}
-
-string Tools::remove_question_mark(string name)
+string Commons::remove_question_mark(string name)
 {
 	constexpr size_t OPTIONAL_SIGN_INDEX = 1;
 
@@ -69,7 +45,7 @@ string Tools::remove_question_mark(string name)
 
 }
 
-Tools::FeatureType Tools::get_feature_type(string name, char delimiter)
+Commons::FeatureType Commons::get_feature_type(string name, char delimiter)
 {
 	switch (delimiter)
 	{
