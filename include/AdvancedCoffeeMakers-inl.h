@@ -20,4 +20,12 @@ AdvancedCoffeeMakersSharedPointer AdvancedCoffeeMakers::get_instance() noexcept
 	return instance;
 }
 
+bool AdvancedCoffeeMakers::is_valid_configuration() const noexcept
+{
+	for (size_t index; index < current_configuration.get_size(); ++index)
+	{
+		std::string feature_name = current_configuration.get_feature_name(index);
+	}
+}
+
 #endif

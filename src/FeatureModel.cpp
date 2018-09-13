@@ -27,4 +27,3 @@ void FeatureModel::make_feature_model(string line) noexcept
 		cerr << "No valid delimiter found!" << endl;
 	}
 }
-

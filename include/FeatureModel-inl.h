@@ -21,13 +21,4 @@ void FeatureModel::fill_feature_model_vector(std::vector<std::string>& tokens,
 	Commons::tokenize(tokens, line, delimiter);
 }
 
-bool FeatureModel::is_valid_configuration(const Configuration& configuration)
-		const noexcept
-{
-	for (size_t index; index < configuration.get_size(); ++index)
-	{
-		std::string feature_name = configuration.get_feature_name(index);
-	}
-}
-
 #endif

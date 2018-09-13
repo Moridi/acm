@@ -14,11 +14,14 @@ public:
 	typedef std::shared_ptr<AdvancedCoffeeMakers> AdvancedCoffeeMakersSharedPointer;
 
 	inline static AdvancedCoffeeMakersSharedPointer get_instance() noexcept;
-	void process() const noexcept;
+	void process() noexcept;
+	inline bool is_valid_configuration() const noexcept;
 
 private:
 	inline AdvancedCoffeeMakers() noexcept;
 	static AdvancedCoffeeMakersSharedPointer instance;
+	Configuration current_configuration;
+	FeatureModel feature_model;
 };
 
 #include "AdvancedCoffeeMakers-inl.h"
