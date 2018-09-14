@@ -13,10 +13,13 @@ coffee machine. Relationships between a parent feature and its child features (o
 categorized as:
 
   • Mandatory – child feature is required.
-  • Optional – child feature is optional.
-  • Or – at least one of the sub-features must be selected.
-  • Alternative (xor) – one of the sub-features must be selected.
   
+  • Optional – child feature is optional.
+  
+  • Or – at least one of the sub-features must be selected.
+  
+  • Alternative (xor) – one of the sub-features must be selected.
+##
 Having a feature model, a customer may ask for a specific configuration, i.e., a set of features. For
 example, {Coffee Machine, Brewer, Coffee Maker, American, Creamer, Regular} form a valid
 configuration. Note that all mandatory features (including the root) must be present in a valid
@@ -28,7 +31,7 @@ from a set of features having ‘or’ relationship with their parents, and must
 also be included.
 Your program must input a feature model, together with a set of configurations, and for each configuration
 determines whether the configuration is valid.
-
+##
 Input
 
 The input consists of a number of test cases. Each test case has two parts. The first part represents the
@@ -36,7 +39,9 @@ feature model and the second part lists the configurations to be validated. The 
 as a set of lines of the following forms, each describing a (non-leaf) feature F:
 
 F = F1 + F2 + ... + Fn, where Fi is either a feature name, or a question mark followed by a feature name.
+
 F = F1 | F2 | ... | Fn, where Fi is a feature name
+
 F = F1 ^ F2 ^ ... ^ Fn, where Fi is a feature name
 
 Each line defines the sub-features of a feature F. In the first case, optional features are preceded by a
@@ -49,32 +54,50 @@ The last line of a feature model description comes a line containing a single # 
 the lines describing the configurations that you must validate. Each configuration comes in a separate line
 of the form {F1, F2, ..., Fn}, where Fi is a feature name, and n > 0. You may assume that each Fi has
 appeared in the feature model description. The last line of the test case is a single line containing ##.
-
+##
 Output
 
 For each configuration in each test case, print one line in the output containing either Valid or Invalid
 words, indicating whether the corresponding configuration is valid. Print a line containing ## after the
 output for each test case.
-
+##
 Sample Input
 
 2
 CoffeeMachine = Brewer + CoffeeMaker + Creamer + ?TeaMaker
+
 CoffeeMaker = American | Espresso
+
 Creamer = Regular ^ Irish
-#
+
+\#
+
 {CoffeeMachine, Brewer, CoffeeMaker, American, Creamer, Regular}
+
 {CoffeeMachine, Brewer, CoffeeMaker, Creamer, Regular, TeaMaker}
-##
+
+\#\#
+
 A=?B+?C
+
 B=D|E
-#
+
+\#
+
 {A,B,C,D,E}
+
 {A,D}
-##Sample Input
+
+\#\#
+
 Valid
+
 Invalid
-##
+
+\#\#
+
 Valid
+
 Invalid
-##
+
+\#\#
