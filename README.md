@@ -1,3 +1,7 @@
+    Advanced Coffee Makers
+##
+Problem
+##
 Advanced Coffee Makers (ACM) Company holds a large portion of the coffee vending machine market.
 Facing with numerous variations of coffee machines that the market demands for, ACM tries to develop a
 product line, so that each time a customer requests for a specific configuration of coffee machines, it can
@@ -64,6 +68,7 @@ output for each test case.
 Sample Input
 
 2
+
 CoffeeMachine = Brewer + CoffeeMaker + Creamer + ?TeaMaker
 
 CoffeeMaker = American | Espresso
