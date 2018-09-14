@@ -69,17 +69,17 @@ Sample Input
 
 2
 
-CoffeeMachine = Brewer + CoffeeMaker + Creamer + ?TeaMaker
+CoffeeMachine=Brewer+CoffeeMaker+Creamer+?TeaMaker
 
-CoffeeMaker = American | Espresso
+CoffeeMaker=American|Espresso
 
-Creamer = Regular ^ Irish
+Creamer=Regular^Irish
 
 \#
 
-{CoffeeMachine, Brewer, CoffeeMaker, American, Creamer, Regular}
+{CoffeeMachine,Brewer,CoffeeMaker,American,Creamer,Regular}
 
-{CoffeeMachine, Brewer, CoffeeMaker, Creamer, Regular, TeaMaker}
+{CoffeeMachine,Brewer,CoffeeMaker,Creamer,Regular,TeaMaker}
 
 \#\#
 
