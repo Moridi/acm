@@ -80,8 +80,9 @@ bool Configuration::get_validation(size_t index)
 inline bool Configuration::is_iterable()
 {
 	bool is_iterable = true;
-	for (size_t index; index < configuration_validation.size(); ++index)
-		is_iterable = configuration_validation[index] & is_iterable;
+	for (size_t index = 0; index < configuration_validation.size(); ++index)
+		is_iterable &= configuration_validation[index];
+
 	return is_iterable;
 }
 

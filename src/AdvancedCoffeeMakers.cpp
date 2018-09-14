@@ -34,12 +34,36 @@ void AdvancedCoffeeMakers::process() noexcept
 			check_configuration_validity();
 			add_to_output_stream();
 		}
-		output_stream << "##\n";
+		output_stream << TEST_CASE_END << "\n";
+	}
+}
+
+void AdvancedCoffeeMakers::check_relations(FeatureModelMap::iterator& iterator)
+{
+	std::vector<Feature> sub_features = iterator->second.second;
+	Commons::DelimiterType delimiter_type = iterator->second.first;
+
+	switch(delimiter_type)
+	{
+		case Commons::DelimiterType::Mandatory:
+			mandatory_check(sub_features);
+			break;
+
+		case Commons::DelimiterType::Or:
+			or_check(sub_features);
+			break;
+
+		case Commons::DelimiterType::Alternative:
+			alternative_check(sub_features);
+			break;
+		default:
+				break;
 	}
 }
 
 void AdvancedCoffeeMakers::check_configuration_validity() noexcept
 {
+	is_valid_configuration = false;
 	try
 	{
 		int root_index = current_configuration.get_index(
@@ -48,7 +72,6 @@ void AdvancedCoffeeMakers::check_configuration_validity() noexcept
 	}
 	catch(FEATURE_NAME_NOT_FOUND)
 	{
-		is_valid_configuration = false;
 		return;
 	}
 
@@ -61,16 +84,10 @@ void AdvancedCoffeeMakers::check_configuration_validity() noexcept
 		for (FeatureModelMap::iterator iterator = features.begin();
 				iterator != features.end(); ++iterator)
 		{
-			std::vector<Feature> sub_features = iterator->second;
 			std::string feature_name = iterator->first;
 
 			if (current_configuration.has_feature(feature_name))
-			{
-				mandatory_check(sub_features);
-//				alternative_check(sub_features);
-			}
-			else
-				continue;
+				check_relations(iterator);
 		}
 	}
 }

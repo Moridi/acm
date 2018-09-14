@@ -74,7 +74,7 @@ void AdvancedCoffeeMakers::alternative_check(const std::vector<Feature>& sub_fea
 		{
 			if (current_configuration.has_feature(feature.get_name()) && !(is_valid_xor))
 				is_valid_xor = true;
-			if (current_configuration.has_feature(feature.get_name()) && is_valid_xor)
+			else if (current_configuration.has_feature(feature.get_name()) && is_valid_xor)
 			{
 				is_valid_xor = false;
 				break;
@@ -83,6 +83,24 @@ void AdvancedCoffeeMakers::alternative_check(const std::vector<Feature>& sub_fea
 	}
 	is_valid_configuration = is_valid_configuration & is_valid_xor;
 }
+
+void AdvancedCoffeeMakers::or_check(const std::vector<Feature>& sub_features)
+{
+	bool is_valid_or = false;
+
+	for (int j = 0; j < sub_features.size(); ++j)
+	{
+		Feature feature = sub_features[j];
+
+		if(feature.get_feature_type() == Commons::FeatureType::Or)
+		{
+			if (current_configuration.has_feature(feature.get_name()))
+				is_valid_or = true;
+		}
+	}
+	is_valid_configuration = is_valid_configuration & is_valid_or;
+}
+
 
 void AdvancedCoffeeMakers::add_to_output_stream()
 {

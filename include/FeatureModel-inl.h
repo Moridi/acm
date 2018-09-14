@@ -5,7 +5,7 @@
 #error "FeatureModel-inl.h" should be included only in "FeatureModel.h" file.
 #endif
 
-typedef std::map<std::string, std::vector<Feature>> FeatureModelMap;
+typedef std::map<std::string, pair<Commons::DelimiterType, std::vector<Feature>>> FeatureModelMap;
 
 FeatureModel::FeatureModel()
 {
@@ -34,12 +34,12 @@ std::string FeatureModel::get_root_name()
 
 std::string FeatureModel::get_adjacent_name(std::string parent_name, size_t index)
 {
-	return features[parent_name][index].get_name();
+	return features[parent_name].second[index].get_name();
 }
 
 size_t FeatureModel::get_adjacents_size(std::string parent_name)
 {
-	return features[parent_name].size();
+	return features[parent_name].second.size();
 }
 
 FeatureModelMap FeatureModel::get_features() const

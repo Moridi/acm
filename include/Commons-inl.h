@@ -45,19 +45,37 @@ string Commons::remove_question_mark(string name)
 
 }
 
+Commons::DelimiterType Commons::get_delimiter_type(char delimiter)
+{
+	switch (delimiter)
+	{
+		case static_cast<char>(DelimiterType::Mandatory):
+			return DelimiterType::Mandatory;
+
+		case static_cast<char>(DelimiterType::Alternative):
+			return DelimiterType::Alternative;
+
+		case static_cast<char>(DelimiterType::Or):
+			return DelimiterType::Or;
+
+		default:
+			throw BAD_DELIMITER_EXCEPTION();
+	}
+}
+
 Commons::FeatureType Commons::get_feature_type(string name, char delimiter)
 {
 	switch (delimiter)
 	{
-		case static_cast<char>(FeatureType::Mandatory):
+		case static_cast<char>(DelimiterType::Mandatory):
 			if (name.find(static_cast<char>(FeatureType::Optional)) == NOT_FOUND)
 				return FeatureType::Mandatory;
 			return FeatureType::Optional;
 
-		case static_cast<char>(FeatureType::Alternative):
+		case static_cast<char>(DelimiterType::Alternative):
 			return FeatureType::Alternative;
 
-		case static_cast<char>(FeatureType::Or):
+		case static_cast<char>(DelimiterType::Or):
 			return FeatureType::Or;
 
 		default:

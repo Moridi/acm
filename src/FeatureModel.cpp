@@ -18,7 +18,9 @@ void FeatureModel::parse_feature_model(string line) noexcept
 		{
 			string name = Commons::remove_question_mark(features_name[index]);
 
-			features[features_name[PARENT_FEATURE_INDEX]].push_back(
+			features[features_name[PARENT_FEATURE_INDEX]].first =
+					Commons::get_delimiter_type(delimiter);
+			features[features_name[PARENT_FEATURE_INDEX]].second.push_back(
 					Feature(name, Commons::get_feature_type(features_name[index], delimiter)));
 		}
 	}

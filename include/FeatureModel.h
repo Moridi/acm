@@ -9,7 +9,8 @@
 class FeatureModel
 {
 public:
-	typedef std::map<std::string, std::vector<Feature>> FeatureModelMap;
+	typedef std::map<std::string, pair<Commons::DelimiterType, std::vector<Feature>>>
+			FeatureModelMap;
 
 	inline FeatureModel();
 	void parse_feature_model(std::string line) noexcept;

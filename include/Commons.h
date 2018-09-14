@@ -20,6 +20,14 @@ public:
 		Or = '|',
 		Alternative = '^'
 	};
+
+	enum class DelimiterType : char
+	{
+		Mandatory = '+',
+		Or = '|',
+		Alternative = '^'
+	};
+
 	static constexpr size_t BEGIN = 0;
 	static constexpr int NOT_FOUND = -1;
 
@@ -27,6 +35,7 @@ public:
 	inline static void tokenize(std::vector<std::string>& tokens, std::string line,
 			const char delimiter) noexcept;
 	inline static FeatureType get_feature_type(std::string name, char delimiter);
+	inline static DelimiterType get_delimiter_type(char delimiter);
 	inline static std::string remove_question_mark(std::string name);
 };
 
