@@ -10,25 +10,15 @@ class FeatureModel
 {
 public:
 	inline FeatureModel();
-	void make_feature_model(std::string line) noexcept;
+	void parse_feature_model(std::string line) noexcept;
 	inline void fill_feature_model_vector(std::vector<std::string>& tokens,
 			std::string line, const char delimiter) noexcept;
-
-	void print_feature_model()
-	{
-		for (std::map<std::string, std::vector<Feature>>::iterator it=features.begin(); it!=features.end(); ++it)
-		{
-			std::vector<Feature> features = it->second;
-			std::cout << "***** " << it->first << " => \n";
-			for (int j = 0; j < features.size(); ++j)
-			{
-				Feature feature = features[j];
-				std::cout << feature.value.first << " " << static_cast<char>(feature.value.second) << std::endl;
-			}
-		}
-	}
+	inline std::string get_root_name();
+	inline std::string get_adjacent_name(std::string parent_name, size_t index);
+	inline size_t get_adjacents_size(std::string parent_name);
 
 private:
+	std::string root_name;
 	std::map<std::string, std::vector<Feature>> features;
 };
 

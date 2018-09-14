@@ -29,7 +29,7 @@ char Commons::get_delimiter(string line)
 	constexpr std::array<char, SIZE> DELIMITERS = {'+', '|', '^'};
 
 	for (size_t i = 0; i < DELIMITERS.size(); ++i)
-		if (line.find(DELIMITERS[i]) != DELIMITER_NOT_FOUND)
+		if (line.find(DELIMITERS[i]) != NOT_FOUND)
 			return DELIMITERS[i];
 
 	throw BAD_DELIMITER_EXCEPTION();
@@ -39,7 +39,7 @@ string Commons::remove_question_mark(string name)
 {
 	constexpr size_t OPTIONAL_SIGN_INDEX = 1;
 
-	if (name.find(static_cast<char>(FeatureType::Optional)) == DELIMITER_NOT_FOUND)
+	if (name.find(static_cast<char>(FeatureType::Optional)) == NOT_FOUND)
 		return name;
 	return name.substr(OPTIONAL_SIGN_INDEX);
 
@@ -50,7 +50,7 @@ Commons::FeatureType Commons::get_feature_type(string name, char delimiter)
 	switch (delimiter)
 	{
 		case static_cast<char>(FeatureType::Mandatory):
-			if (name.find(static_cast<char>(FeatureType::Optional)) == DELIMITER_NOT_FOUND)
+			if (name.find(static_cast<char>(FeatureType::Optional)) == NOT_FOUND)
 				return FeatureType::Mandatory;
 			return FeatureType::Optional;
 

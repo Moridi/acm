@@ -8,6 +8,7 @@
 #include "Commons.h"
 
 Configuration::Configuration()
+: is_valid_configuraion(false)
 {
 }
 
@@ -33,6 +34,37 @@ string Configuration::get_feature_name(size_t index) const
 size_t Configuration::get_size() const noexcept
 {
 	return configuration.size();
+}
+
+void Configuration::reset_validations()
+{
+	for (size_t i = 0; i < configuration.size(); ++i)
+		configuration_validation.push_back(false);
+}
+
+int Configuration::get_index(std::string name)
+{
+	std::vector<std::string>::iterator iterator;
+
+	iterator = find(configuration.begin(), configuration.end(), name);
+	if (iterator != configuration.end())
+		return iterator - configuration.begin();
+	throw FEATURE_NAME_NOT_FOUND();
+}
+
+inline void Configuration::set_true(size_t index)
+{
+	configuration_validation[index] = true;
+}
+
+std::string Configuration::get_name(size_t index)
+{
+	return configuration[index];
+}
+
+bool Configuration::get_validation(size_t index)
+{
+	return configuration_validation[index];
 }
 
 #endif

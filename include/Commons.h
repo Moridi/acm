@@ -8,6 +8,7 @@
 class BAD_DELIMITER_EXCEPTION{};
 class BAD_CONFIGURAION_STYLE_EXCEPTION{};
 class VECTOR_OUT_OF_SIZE_EXCEPTION{};
+class FEATURE_NAME_NOT_FOUND{};
 
 class Commons
 {
@@ -19,15 +20,14 @@ public:
 		Or = '|',
 		Alternative = '^'
 	};
+	static constexpr size_t BEGIN = 0;
+	static constexpr int NOT_FOUND = -1;
 
 	inline static char get_delimiter(std::string line);
 	inline static void tokenize(std::vector<std::string>& tokens, std::string line,
 			const char delimiter) noexcept;
 	inline static FeatureType get_feature_type(std::string name, char delimiter);
 	inline static std::string remove_question_mark(std::string name);
-
-private:
-	static constexpr int DELIMITER_NOT_FOUND = -1;
 };
 
 #include "Commons-inl.h"

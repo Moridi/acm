@@ -2,7 +2,7 @@
 
 #include "Commons.h"
 
-void Configuration::make_configuration(string line) noexcept
+void Configuration::parse_configuration(string line) noexcept
 {
 	constexpr char DELIMITER = ',';
 	vector<string> tokens;

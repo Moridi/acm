@@ -4,23 +4,23 @@
 
 using namespace std;
 
-void FeatureModel::make_feature_model(string line) noexcept
+void FeatureModel::parse_feature_model(string line) noexcept
 {
 	constexpr size_t PARENT_FEATURE_INDEX = 0;
-	vector<string> tokens;
+	vector<string> features_name;
+
 	try
 	{
 		char delimiter = Commons::get_delimiter(line);
-		fill_feature_model_vector(tokens, line, delimiter);
-		std::vector<Feature> sub_features;
+		fill_feature_model_vector(features_name, line, delimiter);
 
-		for (size_t index = PARENT_FEATURE_INDEX + 1; index < tokens.size(); ++index)
+		for (size_t index = PARENT_FEATURE_INDEX + 1; index < features_name.size(); ++index)
 		{
-			string name = Commons::remove_question_mark(tokens[index]);
-			sub_features.push_back(Feature(name, Commons::get_feature_type(
-					tokens[index], delimiter)));
+			string name = Commons::remove_question_mark(features_name[index]);
+
+			features[features_name[PARENT_FEATURE_INDEX]].push_back(
+					Feature(name, Commons::get_feature_type(features_name[index], delimiter)));
 		}
-		features[tokens[PARENT_FEATURE_INDEX]] = sub_features;
 	}
 	catch (BAD_DELIMITER_EXCEPTION)
 	{

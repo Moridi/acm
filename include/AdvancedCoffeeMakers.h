@@ -15,13 +15,16 @@ public:
 
 	inline static AdvancedCoffeeMakersSharedPointer get_instance() noexcept;
 	void process() noexcept;
-	inline bool is_valid_configuration() const noexcept;
+	void check_configuration_validation() noexcept;
+	inline void dfs(int root_index);
+	inline void dfs_utility(int dfs_index);
 
 private:
 	inline AdvancedCoffeeMakers() noexcept;
 	static AdvancedCoffeeMakersSharedPointer instance;
 	Configuration current_configuration;
-	FeatureModel feature_model;
+	FeatureModel current_feature_model;
+	bool is_valid_configuration;
 };
 
 #include "AdvancedCoffeeMakers-inl.h"
