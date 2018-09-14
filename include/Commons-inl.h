@@ -12,30 +12,29 @@
 
 #include <bits/stdc++.h>
 
-using namespace std;
-
-void Commons::tokenize(vector<string>& tokens, string line, const char delimiter)
+void Commons::tokenize(std::vector<std::string>& tokens, std::string line, const char delimiter)
 		noexcept
 {
-	stringstream string_stream(line);
-	string intermediate;
+	std::stringstream string_stream(line);
+	std::string intermediate;
 	while (getline(string_stream, intermediate, delimiter))
 		tokens.push_back(intermediate);
 }
 
-char Commons::get_delimiter(string line)
+char Commons::get_delimiter(std::string line)
 {
 	constexpr size_t SIZE = 3;
+	constexpr size_t MANDATORY_INDEX = 0;
 	constexpr std::array<char, SIZE> DELIMITERS = {'+', '|', '^'};
 
 	for (size_t i = 0; i < DELIMITERS.size(); ++i)
 		if (line.find(DELIMITERS[i]) != NOT_FOUND)
 			return DELIMITERS[i];
 
-	throw BAD_DELIMITER_EXCEPTION();
+	return DELIMITERS[MANDATORY_INDEX];
 }
 
-string Commons::remove_question_mark(string name)
+std::string Commons::remove_question_mark(std::string name)
 {
 	constexpr size_t OPTIONAL_SIGN_INDEX = 1;
 
@@ -63,7 +62,7 @@ Commons::DelimiterType Commons::get_delimiter_type(char delimiter)
 	}
 }
 
-Commons::FeatureType Commons::get_feature_type(string name, char delimiter)
+Commons::FeatureType Commons::get_feature_type(std::string name, char delimiter)
 {
 	switch (delimiter)
 	{

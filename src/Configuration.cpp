@@ -2,6 +2,8 @@
 
 #include "Commons.h"
 
+using namespace std;
+
 void Configuration::parse_configuration(string line) noexcept
 {
 	constexpr char DELIMITER = ',';

@@ -15,13 +15,16 @@ public:
 
 	inline static AdvancedCoffeeMakersSharedPointer get_instance() noexcept;
 	void process() noexcept;
+
 	void check_configuration_validity() noexcept;
-	inline void dfs(int root_index);
-	inline void dfs_utility(int dfs_index);
 	inline void mandatory_check(const std::vector<Feature>& sub_features);
 	inline void alternative_check(const std::vector<Feature>& sub_features);
 	inline void or_check(const std::vector<Feature>& sub_features);
 	inline void check_relations(FeatureModelMap::iterator& iterator);
+
+	inline void dfs(int root_index);
+	void dfs_utility(int dfs_index);
+
 	inline void add_to_output_stream();
 	inline void print_result();
 

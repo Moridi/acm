@@ -5,7 +5,8 @@
 #error "FeatureModel-inl.h" should be included only in "FeatureModel.h" file.
 #endif
 
-typedef std::map<std::string, pair<Commons::DelimiterType, std::vector<Feature>>> FeatureModelMap;
+typedef std::map<std::string, std::pair<Commons::DelimiterType, std::vector<Feature>>>
+		FeatureModelMap;
 
 FeatureModel::FeatureModel()
 {

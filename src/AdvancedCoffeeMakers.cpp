@@ -40,7 +40,7 @@ void AdvancedCoffeeMakers::process() noexcept
 
 void AdvancedCoffeeMakers::check_relations(FeatureModelMap::iterator& iterator)
 {
-	std::vector<Feature> sub_features = iterator->second.second;
+	vector<Feature> sub_features = iterator->second.second;
 	Commons::DelimiterType delimiter_type = iterator->second.first;
 
 	switch(delimiter_type)
@@ -84,10 +84,35 @@ void AdvancedCoffeeMakers::check_configuration_validity() noexcept
 		for (FeatureModelMap::iterator iterator = features.begin();
 				iterator != features.end(); ++iterator)
 		{
-			std::string feature_name = iterator->first;
+			string feature_name = iterator->first;
 
 			if (current_configuration.has_feature(feature_name))
 				check_relations(iterator);
 		}
 	}
 }
+
+void AdvancedCoffeeMakers::dfs_utility(int dfs_index)
+{
+	current_configuration.set_true(dfs_index);
+
+	std::string name = current_configuration.get_name(dfs_index);
+
+	for (size_t index = Commons::BEGIN;
+			index < current_feature_model.get_adjacents_size(name); ++index)
+	{
+		try
+		{
+			int configuration_index = current_configuration.get_index(
+					current_feature_model.get_adjacent_name(name, index));
+
+			if (!current_configuration.get_validation(configuration_index))
+				dfs_utility(configuration_index);
+		}
+		catch(FEATURE_NAME_NOT_FOUND)
+		{
+			continue;
+		}
+	}
+}
+

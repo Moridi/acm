@@ -15,6 +15,7 @@ public:
 
 	inline void reset_validations();
 	inline void set_true(size_t index);
+
 	inline bool is_iterable();
 	inline bool has_feature(std::string name) noexcept;
 
@@ -27,7 +28,6 @@ public:
 private:
 	std::vector<std::string> configuration;
 	std::vector<bool> configuration_validation;
-	bool is_valid_configuraion;
 };
 
 #include "Configuration-inl.h"
