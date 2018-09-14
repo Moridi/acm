@@ -5,6 +5,8 @@
 #error "FeatureModel-inl.h" should be included only in "FeatureModel.h" file.
 #endif
 
+typedef std::map<std::string, std::vector<Feature>> FeatureModelMap;
+
 FeatureModel::FeatureModel()
 {
 }
@@ -38,6 +40,11 @@ std::string FeatureModel::get_adjacent_name(std::string parent_name, size_t inde
 size_t FeatureModel::get_adjacents_size(std::string parent_name)
 {
 	return features[parent_name].size();
+}
+
+FeatureModelMap FeatureModel::get_features() const
+{
+	return features;
 }
 
 #endif

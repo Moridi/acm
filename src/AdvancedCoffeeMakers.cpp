@@ -31,12 +31,14 @@ void AdvancedCoffeeMakers::process() noexcept
 			Configuration configuration;
 			configuration.parse_configuration(line);
 			current_configuration = configuration;
-			check_configuration_validation();
+			check_configuration_validity();
+			add_to_output_stream();
 		}
+		output_stream << "##\n";
 	}
 }
 
-void AdvancedCoffeeMakers::check_configuration_validation() noexcept
+void AdvancedCoffeeMakers::check_configuration_validity() noexcept
 {
 	try
 	{
@@ -47,5 +49,28 @@ void AdvancedCoffeeMakers::check_configuration_validation() noexcept
 	catch(FEATURE_NAME_NOT_FOUND)
 	{
 		is_valid_configuration = false;
+		return;
+	}
+
+	if(current_configuration.is_iterable())
+	{
+		is_valid_configuration = true;
+
+		FeatureModelMap features = current_feature_model.get_features();
+
+		for (FeatureModelMap::iterator iterator = features.begin();
+				iterator != features.end(); ++iterator)
+		{
+			std::vector<Feature> sub_features = iterator->second;
+			std::string feature_name = iterator->first;
+
+			if (current_configuration.has_feature(feature_name))
+			{
+				mandatory_check(sub_features);
+//				alternative_check(sub_features);
+			}
+			else
+				continue;
+		}
 	}
 }

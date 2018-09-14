@@ -15,4 +15,9 @@ std::string Feature::get_name()
 	return value.first;
 }
 
+Commons::FeatureType Feature::get_feature_type()
+{
+	return value.second;
+}
+
 #endif

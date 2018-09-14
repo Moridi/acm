@@ -5,6 +5,7 @@
 #error "AdvancedCoffeeMakers-inl.h" should be included only in "AdvancedCoffeeMakers.h" file.
 #endif
 
+#include <iostream>
 #include <memory>
 
 typedef std::shared_ptr<AdvancedCoffeeMakers> AdvancedCoffeeMakersSharedPointer;
@@ -48,6 +49,52 @@ void AdvancedCoffeeMakers::dfs(int root_index)
 {
 	current_configuration.reset_validations();
 	dfs_utility(root_index);
+}
+
+void AdvancedCoffeeMakers::mandatory_check(const std::vector<Feature>& sub_features)
+{
+	for (int j = 0; j < sub_features.size(); ++j)
+	{
+		Feature feature = sub_features[j];
+		if(feature.get_feature_type() == Commons::FeatureType::Mandatory)
+			is_valid_configuration = (current_configuration.has_feature(feature.get_name()))
+					&& is_valid_configuration;
+	}
+}
+
+void AdvancedCoffeeMakers::alternative_check(const std::vector<Feature>& sub_features)
+{
+	bool is_valid_xor = false;
+
+	for (int j = 0; j < sub_features.size(); ++j)
+	{
+		Feature feature = sub_features[j];
+
+		if(feature.get_feature_type() == Commons::FeatureType::Alternative)
+		{
+			if (current_configuration.has_feature(feature.get_name()) && !(is_valid_xor))
+				is_valid_xor = true;
+			if (current_configuration.has_feature(feature.get_name()) && is_valid_xor)
+			{
+				is_valid_xor = false;
+				break;
+			}
+		}
+	}
+	is_valid_configuration = is_valid_configuration & is_valid_xor;
+}
+
+void AdvancedCoffeeMakers::add_to_output_stream()
+{
+	if (is_valid_configuration)
+		output_stream << "Valid\n";
+	else
+		output_stream << "Invalid\n";
+}
+
+void AdvancedCoffeeMakers::print_result()
+{
+	std::cout << output_stream.str();
 }
 
 #endif

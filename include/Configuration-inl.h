@@ -52,6 +52,16 @@ int Configuration::get_index(std::string name)
 	throw FEATURE_NAME_NOT_FOUND();
 }
 
+bool Configuration::has_feature(std::string name) noexcept
+{
+	std::vector<std::string>::iterator iterator;
+
+	iterator = find(configuration.begin(), configuration.end(), name);
+	if (iterator != configuration.end())
+		return true;
+	return false;
+}
+
 inline void Configuration::set_true(size_t index)
 {
 	configuration_validation[index] = true;
@@ -65,6 +75,14 @@ std::string Configuration::get_name(size_t index)
 bool Configuration::get_validation(size_t index)
 {
 	return configuration_validation[index];
+}
+
+inline bool Configuration::is_iterable()
+{
+	bool is_iterable = true;
+	for (size_t index; index < configuration_validation.size(); ++index)
+		is_iterable = configuration_validation[index] & is_iterable;
+	return is_iterable;
 }
 
 #endif
