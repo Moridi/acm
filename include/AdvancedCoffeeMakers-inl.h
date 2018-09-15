@@ -11,9 +11,7 @@
 
 typedef std::shared_ptr<AdvancedCoffeeMakers> AdvancedCoffeeMakersSharedPointer;
 
-AdvancedCoffeeMakers::AdvancedCoffeeMakers() noexcept
-{
-}
+AdvancedCoffeeMakers::AdvancedCoffeeMakers() noexcept {}
 
 AdvancedCoffeeMakersSharedPointer AdvancedCoffeeMakers::get_instance() noexcept
 {
@@ -22,36 +20,35 @@ AdvancedCoffeeMakersSharedPointer AdvancedCoffeeMakers::get_instance() noexcept
 	return instance;
 }
 
-void AdvancedCoffeeMakers::dfs(int root_index)
+void AdvancedCoffeeMakers::check_mandatory_relation(
+		const std::vector<Feature>& sub_features) noexcept
 {
-	current_configuration.reset_validations();
-	dfs_utility(root_index);
-}
-
-void AdvancedCoffeeMakers::mandatory_check(const std::vector<Feature>& sub_features)
-{
-	for (int j = 0; j < sub_features.size(); ++j)
+	for (int index = Commons::BEGIN; index < sub_features.size(); ++index)
 	{
-		Feature feature = sub_features[j];
+		Feature feature = sub_features[index];
 		if (feature.get_feature_type() == Commons::FeatureType::Mandatory)
-			is_valid_configuration = (current_configuration.has_feature(feature.get_name()))
+			is_valid_configuration =
+					current_configuration.has_feature(feature.get_name())
 					&& is_valid_configuration;
 	}
 }
 
-void AdvancedCoffeeMakers::alternative_check(const std::vector<Feature>& sub_features)
+void AdvancedCoffeeMakers::check_alternative_relation(
+		const std::vector<Feature>& sub_features) noexcept
 {
 	bool is_valid_xor = false;
 
-	for (int j = 0; j < sub_features.size(); ++j)
+	for (int index = Commons::BEGIN; index < sub_features.size(); ++index)
 	{
-		Feature feature = sub_features[j];
+		Feature feature = sub_features[index];
 
 		if (feature.get_feature_type() == Commons::FeatureType::Alternative)
 		{
-			if (current_configuration.has_feature(feature.get_name()) && !(is_valid_xor))
+			if (current_configuration.has_feature(feature.get_name())
+					&& !(is_valid_xor))
 				is_valid_xor = true;
-			else if (current_configuration.has_feature(feature.get_name()) && is_valid_xor)
+			else if (current_configuration.has_feature(feature.get_name())
+					&& is_valid_xor)
 			{
 				is_valid_xor = false;
 				break;
@@ -61,13 +58,14 @@ void AdvancedCoffeeMakers::alternative_check(const std::vector<Feature>& sub_fea
 	is_valid_configuration = is_valid_configuration & is_valid_xor;
 }
 
-void AdvancedCoffeeMakers::or_check(const std::vector<Feature>& sub_features)
+void AdvancedCoffeeMakers::check_or_relation(
+		const std::vector<Feature>& sub_features) noexcept
 {
 	bool is_valid_or = false;
 
-	for (int j = 0; j < sub_features.size(); ++j)
+	for (int index = Commons::BEGIN; index < sub_features.size(); ++index)
 	{
-		Feature feature = sub_features[j];
+		Feature feature = sub_features[index];
 
 		if (feature.get_feature_type() == Commons::FeatureType::Or)
 		{
@@ -78,15 +76,18 @@ void AdvancedCoffeeMakers::or_check(const std::vector<Feature>& sub_features)
 	is_valid_configuration = is_valid_configuration & is_valid_or;
 }
 
-void AdvancedCoffeeMakers::add_to_output_stream()
+void AdvancedCoffeeMakers::add_to_output_stream() noexcept
 {
+	constexpr char VALID[] = "Valid\n";
+	constexpr char INVALID[] = "Invalid\n";
+
 	if (is_valid_configuration)
-		output_stream << "Valid\n";
+		output_stream << VALID;
 	else
-		output_stream << "Invalid\n";
+		output_stream << INVALID;
 }
 
-void AdvancedCoffeeMakers::print_result()
+void AdvancedCoffeeMakers::print_result() const noexcept
 {
 	std::cout << output_stream.str();
 }

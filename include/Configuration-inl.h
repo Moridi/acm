@@ -10,51 +10,36 @@
 
 #include "Commons.h"
 
-Configuration::Configuration()
+Configuration::Configuration() {}
+
+void Configuration::clear()
 {
+	configuration.clear();
+	configuration_validation.clear();
 }
 
-std::string Configuration::make_compatible_string_for_configuration(std::string& line)
-{
-	constexpr size_t USELESS_OPEN_BRACKET_INDEX = 1;
-	constexpr size_t MINIMUM_SIZE = 2;
-
-	if (line.size() < MINIMUM_SIZE)
-		throw BadConfiguraionStyleException();
-
-	size_t useless_close_bracket_index = line.size() - MINIMUM_SIZE;
-	return line.substr(USELESS_OPEN_BRACKET_INDEX, useless_close_bracket_index);
-}
-
-std::string Configuration::get_feature_name(size_t index) const
-{
-	if (index > configuration.size())
-		throw VectorOutOfSizeException();
-	return configuration[index];
-}
-
-size_t Configuration::get_size() const noexcept
+int Configuration::get_size() const noexcept
 {
 	return configuration.size();
 }
 
 void Configuration::reset_validations()
 {
-	for (size_t i = 0; i < configuration.size(); ++i)
+	for (int index = Commons::BEGIN; index < configuration.size(); ++index)
 		configuration_validation.push_back(false);
 }
 
-int Configuration::get_index(std::string name)
+int Configuration::get_index(const std::string& name) noexcept
 {
 	std::vector<std::string>::iterator iterator;
 
 	iterator = find(configuration.begin(), configuration.end(), name);
 	if (iterator != configuration.end())
 		return iterator - configuration.begin();
-	throw FeatureNameNotFound();
+	return Commons::NOT_FOUND;
 }
 
-bool Configuration::has_feature(std::string name) noexcept
+bool Configuration::has_feature(const std::string& name) noexcept
 {
 	std::vector<std::string>::iterator iterator;
 
@@ -64,25 +49,35 @@ bool Configuration::has_feature(std::string name) noexcept
 	return false;
 }
 
-void Configuration::set_true(size_t index)
+void Configuration::set_true(int index)
 {
+	if (index > configuration_validation.size())
+		throw VectorOutOfSizeException();
+
 	configuration_validation[index] = true;
 }
 
-std::string Configuration::get_name(size_t index)
+std::string Configuration::get_name(int index) const
 {
+	if (index > configuration_validation.size())
+		throw VectorOutOfSizeException();
+
 	return configuration[index];
 }
 
-bool Configuration::get_validation(size_t index)
+bool Configuration::get_validation(int index) const
 {
+	if (index > configuration_validation.size())
+		throw VectorOutOfSizeException();
+
 	return configuration_validation[index];
 }
 
 bool Configuration::is_iterable()
 {
 	bool is_iterable = true;
-	for (size_t index = 0; index < configuration_validation.size(); ++index)
+	for (int index = Commons::BEGIN;
+			index < configuration_validation.size(); ++index)
 		is_iterable &= configuration_validation[index];
 
 	return is_iterable;

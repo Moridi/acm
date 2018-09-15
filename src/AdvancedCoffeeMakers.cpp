@@ -9,109 +9,108 @@ AdvancedCoffeeMakersSharedPointer AdvancedCoffeeMakers::instance;
 
 void AdvancedCoffeeMakers::process() noexcept
 {
-	constexpr char FEATURE_MODEL_END[] = "#";
-	constexpr char TEST_CASE_END[] = "##";
+	static constexpr char FEATURE_MODEL_END[] = "#";
+	static constexpr char TEST_CASE_END[] = "##";
 	int number_of_test_cases;
 	string line;
 
 	cout << "Please enter number of test cases : " << endl;
 	cin >> number_of_test_cases;
 
-	for (size_t i = 0; i < number_of_test_cases; ++i)
+	for (int index = Commons::BEGIN; index < number_of_test_cases; ++index)
 	{
-		FeatureModel feature_model;
-
+		current_feature_model.clear();
 		while ((cin >> line) && (line != FEATURE_MODEL_END))
-			feature_model.parse_feature_model(line);
-
-		current_feature_model = feature_model;
+			current_feature_model.parse_feature_model(line);
 
 		while ((cin >> line) && (line != TEST_CASE_END))
 		{
-			Configuration configuration;
-			configuration.parse_configuration(line);
-			current_configuration = configuration;
+			current_configuration.parse_configuration(line);
 			check_configuration_validity();
 			add_to_output_stream();
 		}
-		output_stream << TEST_CASE_END << "\n";
+		output_stream << TEST_CASE_END << endl;
 	}
 }
 
-void AdvancedCoffeeMakers::check_relations(FeatureModelMap::iterator& iterator)
+void AdvancedCoffeeMakers::check_relations(
+		const FeatureModelMap::iterator& iterator) noexcept
 {
 	vector<Feature> sub_features = iterator->second.second;
 	Commons::DelimiterType delimiter_type = iterator->second.first;
+	string feature_name = iterator->first;
 
-	switch (delimiter_type)
-	{
-		case Commons::DelimiterType::Mandatory:
-			mandatory_check(sub_features);
-			break;
-
-		case Commons::DelimiterType::Or:
-			or_check(sub_features);
-			break;
-
-		case Commons::DelimiterType::Alternative:
-			alternative_check(sub_features);
-			break;
-		default:
+	if (current_configuration.has_feature(feature_name))
+		switch (delimiter_type)
+		{
+			case Commons::DelimiterType::Mandatory:
+				check_mandatory_relation(sub_features);
 				break;
-	}
+
+			case Commons::DelimiterType::Or:
+				check_or_relation(sub_features);
+				break;
+
+			case Commons::DelimiterType::Alternative:
+				check_alternative_relation(sub_features);
+				break;
+			default:
+				break;
+		}
 }
 
 void AdvancedCoffeeMakers::check_configuration_validity() noexcept
 {
 	is_valid_configuration = false;
-	try
-	{
-		int root_index = current_configuration.get_index(
-				current_feature_model.get_root_name());
-		dfs(root_index);
-	}
-	catch (FeatureNameNotFound)
-	{
+	if (dfs() == Commons::Result::UNSUCCESSFUL)
 		return;
-	}
 
 	if (current_configuration.is_iterable())
 	{
 		is_valid_configuration = true;
-
 		FeatureModelMap features = current_feature_model.get_features();
 
 		for (FeatureModelMap::iterator iterator = features.begin();
-				iterator != features.end(); ++iterator)
-		{
-			string feature_name = iterator->first;
-
-			if (current_configuration.has_feature(feature_name))
-				check_relations(iterator);
-		}
+			 iterator != features.end(); ++iterator)
+			check_relations(iterator);
 	}
 }
 
-void AdvancedCoffeeMakers::dfs_utility(int dfs_index)
+
+Commons::Result AdvancedCoffeeMakers::dfs() noexcept
+{
+	try
+	{
+		int root_index = current_configuration.get_index(
+					current_feature_model.get_root_name());
+		if (root_index == Commons::NOT_FOUND)
+			return Commons::Result::UNSUCCESSFUL;
+
+		current_configuration.reset_validations();
+		dfs_utility(root_index);
+	}
+	catch (VectorOutOfSizeException)
+	{
+		std::cerr << "Segmentation fault!" << std::endl;
+		return Commons::Result::UNSUCCESSFUL;
+	}
+	return Commons::Result::SUCCESSFUL;
+}
+
+void AdvancedCoffeeMakers::dfs_utility(int dfs_index) noexcept
 {
 	current_configuration.set_true(dfs_index);
 
 	std::string name = current_configuration.get_name(dfs_index);
 
-	for (size_t index = Commons::BEGIN;
+	for (int index = Commons::BEGIN;
 			index < current_feature_model.get_adjacents_size(name); ++index)
 	{
-		try
-		{
-			int configuration_index = current_configuration.get_index(
-					current_feature_model.get_adjacent_name(name, index));
+		int configuration_index = current_configuration.get_index(
+				current_feature_model.get_adjacent_name(name, index));
 
-			if (!current_configuration.get_validation(configuration_index))
-				dfs_utility(configuration_index);
-		}
-		catch (FeatureNameNotFound)
-		{
-			continue;
-		}
+		if ((configuration_index != Commons::NOT_FOUND)
+				&& (!current_configuration.get_validation(configuration_index)))
+			dfs_utility(configuration_index);
 	}
 }

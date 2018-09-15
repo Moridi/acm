@@ -17,14 +17,16 @@ public:
 
 	inline FeatureModel();
 
-	void parse_feature_model(std::string line) noexcept;
-	inline void fill_feature_model_vector(std::vector<std::string>& tokens,
-			std::string line, const char delimiter) noexcept;
+	void parse_feature_model(const std::string& line) noexcept;
+	void fill_feature_model_vector(std::vector<std::string>& tokens,
+			const std::string& feature_model_string, const char delimiter) noexcept;
+	inline void clear();
 
-	inline std::string get_root_name();
-	inline std::string get_adjacent_name(std::string parent_name, size_t index);
-	inline size_t get_adjacents_size(std::string parent_name);
-	inline FeatureModelMap get_features() const;
+	inline std::string get_root_name() const noexcept;
+	inline std::string get_adjacent_name(const std::string& parent_name,
+			int index);
+	inline int get_adjacents_size(const std::string& parent_name) noexcept;
+	inline FeatureModelMap get_features() const noexcept;
 
 private:
 	std::string root_name;

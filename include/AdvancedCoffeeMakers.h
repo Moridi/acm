@@ -17,16 +17,19 @@ public:
 	void process() noexcept;
 
 	void check_configuration_validity() noexcept;
-	inline void mandatory_check(const std::vector<Feature>& sub_features);
-	inline void alternative_check(const std::vector<Feature>& sub_features);
-	inline void or_check(const std::vector<Feature>& sub_features);
-	inline void check_relations(FeatureModelMap::iterator& iterator);
+	inline void check_mandatory_relation(const std::vector<Feature>& sub_features)
+			noexcept;
+	inline void check_alternative_relation(const std::vector<Feature>& sub_features)
+			noexcept;
+	inline void check_or_relation(const std::vector<Feature>& sub_features)
+			noexcept;
+	inline void check_relations(const FeatureModelMap::iterator& iterator) noexcept;
 
-	inline void dfs(int root_index);
-	void dfs_utility(int dfs_index);
+	Commons::Result dfs() noexcept;
+	void dfs_utility(int dfs_index) noexcept;
 
-	inline void add_to_output_stream();
-	inline void print_result();
+	inline void add_to_output_stream() noexcept;
+	inline void print_result() const noexcept;
 
 private:
 	inline AdvancedCoffeeMakers() noexcept;

@@ -12,8 +12,8 @@
 
 #include <bits/stdc++.h>
 
-void Commons::tokenize(std::vector<std::string>& tokens, std::string line, const char delimiter)
-		noexcept
+void Commons::tokenize(std::vector<std::string>& tokens,
+		const std::string& line, const char delimiter) noexcept
 {
 	std::stringstream string_stream(line);
 	std::string intermediate;
@@ -21,29 +21,41 @@ void Commons::tokenize(std::vector<std::string>& tokens, std::string line, const
 		tokens.push_back(intermediate);
 }
 
-char Commons::get_delimiter(std::string line)
+char Commons::get_delimiter(const std::string& line) noexcept
 {
-	constexpr size_t SIZE = 3;
-	constexpr size_t MANDATORY_INDEX = 0;
-	constexpr std::array<char, SIZE> DELIMITERS = {'+', '|', '^'};
+	constexpr uint8_t SIZE = 3;
+	constexpr uint8_t MANDATORY_INDEX = 0;
+	constexpr char DELIMITERS[SIZE] = {'+', '|', '^'};
 
-	for (size_t i = 0; i < DELIMITERS.size(); ++i)
-		if (line.find(DELIMITERS[i]) != NOT_FOUND)
-			return DELIMITERS[i];
+	for (int index = Commons::BEGIN; index < SIZE; ++index)
+		if (line.find(DELIMITERS[index]) != NOT_FOUND)
+			return DELIMITERS[index];
 
 	return DELIMITERS[MANDATORY_INDEX];
 }
 
-std::string Commons::remove_question_mark(std::string name)
+std::string Commons::remove_question_mark(const std::string& name) noexcept
 {
-	constexpr size_t OPTIONAL_SIGN_INDEX = 1;
+	constexpr uint8_t OPTIONAL_SIGN_INDEX = 1;
 
 	if (name.find(static_cast<char>(FeatureType::Optional)) == NOT_FOUND)
 		return name;
 	return name.substr(OPTIONAL_SIGN_INDEX);
 }
 
-Commons::DelimiterType Commons::get_delimiter_type(char delimiter)
+std::string Commons::remove_extra_brackets(const std::string& line) noexcept
+{
+	constexpr uint8_t USELESS_OPEN_BRACKET_INDEX = 1;
+	constexpr uint8_t MINIMUM_SIZE = 2;
+
+	if (line.size() < MINIMUM_SIZE)
+		throw BadConfiguraionStyleException();
+
+	const int useless_close_bracket_index = line.size() - MINIMUM_SIZE;
+	return line.substr(USELESS_OPEN_BRACKET_INDEX, useless_close_bracket_index);
+}
+
+Commons::DelimiterType Commons::get_delimiter_type(const char delimiter)
 {
 	switch (delimiter)
 	{
@@ -61,7 +73,8 @@ Commons::DelimiterType Commons::get_delimiter_type(char delimiter)
 	}
 }
 
-Commons::FeatureType Commons::get_feature_type(std::string name, char delimiter)
+Commons::FeatureType Commons::get_feature_type(const std::string& name,
+		char delimiter)
 {
 	switch (delimiter)
 	{

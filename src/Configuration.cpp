@@ -4,15 +4,15 @@
 
 using namespace std;
 
-void Configuration::parse_configuration(string line) noexcept
+void Configuration::parse_configuration(const string& line) noexcept
 {
+	clear();
 	constexpr char DELIMITER = ',';
 	vector<string> tokens;
-
 	try
 	{
-		line = make_compatible_string_for_configuration(line);
-		Commons::tokenize(tokens, line, DELIMITER);
+		const string configuration_string = Commons::remove_extra_brackets(line);
+		Commons::tokenize(tokens, configuration_string, DELIMITER);
 		configuration = tokens;
 	}
 	catch (BadDelimiterException)

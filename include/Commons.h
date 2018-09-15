@@ -4,11 +4,12 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <exception>
 
-class BadDelimiterException{};
-class BadConfiguraionStyleException{};
-class VectorOutOfSizeException{};
-class FeatureNameNotFound{};
+class BadDelimiterException : public std::exception {};
+class BadConfiguraionStyleException : public std::exception {};
+class VectorOutOfSizeException : public std::exception {};
+class FeatureNameNotFound : public std::exception {};
 
 class Commons
 {
@@ -28,15 +29,25 @@ public:
 		Alternative = '^'
 	};
 
-	static constexpr size_t BEGIN = 0;
+	static constexpr uint8_t BEGIN = 0;
 	static constexpr int NOT_FOUND = -1;
 
-	inline static char get_delimiter(std::string line);
-	inline static void tokenize(std::vector<std::string>& tokens, std::string line,
-			const char delimiter) noexcept;
-	inline static FeatureType get_feature_type(std::string name, char delimiter);
-	inline static DelimiterType get_delimiter_type(char delimiter);
-	inline static std::string remove_question_mark(std::string name);
+	enum class Result : bool
+	{
+		SUCCESSFUL = true,
+		UNSUCCESSFUL = false
+	};
+
+	inline static char get_delimiter(const std::string& line) noexcept;
+	inline static void tokenize(std::vector<std::string>& tokens,
+			const std::string& line, const char delimiter) noexcept;
+	inline static FeatureType get_feature_type(const std::string& name,
+			char delimiter);
+	inline static DelimiterType get_delimiter_type(const char delimiter);
+	inline static std::string remove_question_mark(const std::string& name)
+			noexcept;
+	inline static std::string remove_extra_brackets(const std::string& line)
+			noexcept;
 };
 
 #include "Commons-inl.h"
