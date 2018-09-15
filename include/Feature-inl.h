@@ -5,6 +5,9 @@
 #error "Feature-inl.h" should be included only in "Feature.h" file.
 #endif
 
+#include <utility>
+#include <string>
+
 Feature::Feature(std::string name, Commons::FeatureType feature_type)
 {
 	value = std::pair<std::string, Commons::FeatureType> (name, feature_type);

@@ -43,7 +43,7 @@ void AdvancedCoffeeMakers::check_relations(FeatureModelMap::iterator& iterator)
 	vector<Feature> sub_features = iterator->second.second;
 	Commons::DelimiterType delimiter_type = iterator->second.first;
 
-	switch(delimiter_type)
+	switch (delimiter_type)
 	{
 		case Commons::DelimiterType::Mandatory:
 			mandatory_check(sub_features);
@@ -70,12 +70,12 @@ void AdvancedCoffeeMakers::check_configuration_validity() noexcept
 				current_feature_model.get_root_name());
 		dfs(root_index);
 	}
-	catch(FEATURE_NAME_NOT_FOUND)
+	catch (FeatureNameNotFound)
 	{
 		return;
 	}
 
-	if(current_configuration.is_iterable())
+	if (current_configuration.is_iterable())
 	{
 		is_valid_configuration = true;
 
@@ -109,10 +109,9 @@ void AdvancedCoffeeMakers::dfs_utility(int dfs_index)
 			if (!current_configuration.get_validation(configuration_index))
 				dfs_utility(configuration_index);
 		}
-		catch(FEATURE_NAME_NOT_FOUND)
+		catch (FeatureNameNotFound)
 		{
 			continue;
 		}
 	}
 }
-

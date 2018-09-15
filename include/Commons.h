@@ -5,10 +5,10 @@
 #include <vector>
 #include <string>
 
-class BAD_DELIMITER_EXCEPTION{};
-class BAD_CONFIGURAION_STYLE_EXCEPTION{};
-class VECTOR_OUT_OF_SIZE_EXCEPTION{};
-class FEATURE_NAME_NOT_FOUND{};
+class BadDelimiterException{};
+class BadConfiguraionStyleException{};
+class VectorOutOfSizeException{};
+class FeatureNameNotFound{};
 
 class Commons
 {

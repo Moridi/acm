@@ -5,6 +5,9 @@
 #error "Configuration-inl.h" should be included only in "Configuration.h" file.
 #endif
 
+#include <vector>
+#include <string>
+
 #include "Commons.h"
 
 Configuration::Configuration()
@@ -17,7 +20,7 @@ std::string Configuration::make_compatible_string_for_configuration(std::string&
 	constexpr size_t MINIMUM_SIZE = 2;
 
 	if (line.size() < MINIMUM_SIZE)
-		throw BAD_CONFIGURAION_STYLE_EXCEPTION();
+		throw BadConfiguraionStyleException();
 
 	size_t useless_close_bracket_index = line.size() - MINIMUM_SIZE;
 	return line.substr(USELESS_OPEN_BRACKET_INDEX, useless_close_bracket_index);
@@ -26,7 +29,7 @@ std::string Configuration::make_compatible_string_for_configuration(std::string&
 std::string Configuration::get_feature_name(size_t index) const
 {
 	if (index > configuration.size())
-		throw VECTOR_OUT_OF_SIZE_EXCEPTION();
+		throw VectorOutOfSizeException();
 	return configuration[index];
 }
 
@@ -48,7 +51,7 @@ int Configuration::get_index(std::string name)
 	iterator = find(configuration.begin(), configuration.end(), name);
 	if (iterator != configuration.end())
 		return iterator - configuration.begin();
-	throw FEATURE_NAME_NOT_FOUND();
+	throw FeatureNameNotFound();
 }
 
 bool Configuration::has_feature(std::string name) noexcept
@@ -61,7 +64,7 @@ bool Configuration::has_feature(std::string name) noexcept
 	return false;
 }
 
-inline void Configuration::set_true(size_t index)
+void Configuration::set_true(size_t index)
 {
 	configuration_validation[index] = true;
 }
@@ -76,7 +79,7 @@ bool Configuration::get_validation(size_t index)
 	return configuration_validation[index];
 }
 
-inline bool Configuration::is_iterable()
+bool Configuration::is_iterable()
 {
 	bool is_iterable = true;
 	for (size_t index = 0; index < configuration_validation.size(); ++index)

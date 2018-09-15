@@ -5,6 +5,7 @@
 #error "AdvancedCoffeeMakers-inl.h" should be included only in "AdvancedCoffeeMakers.h" file.
 #endif
 
+#include <vector>
 #include <iostream>
 #include <memory>
 
@@ -16,7 +17,7 @@ AdvancedCoffeeMakers::AdvancedCoffeeMakers() noexcept
 
 AdvancedCoffeeMakersSharedPointer AdvancedCoffeeMakers::get_instance() noexcept
 {
-	if(instance == nullptr)
+	if (instance == nullptr)
 		instance = std::make_shared<AdvancedCoffeeMakers>(AdvancedCoffeeMakers());
 	return instance;
 }
@@ -32,7 +33,7 @@ void AdvancedCoffeeMakers::mandatory_check(const std::vector<Feature>& sub_featu
 	for (int j = 0; j < sub_features.size(); ++j)
 	{
 		Feature feature = sub_features[j];
-		if(feature.get_feature_type() == Commons::FeatureType::Mandatory)
+		if (feature.get_feature_type() == Commons::FeatureType::Mandatory)
 			is_valid_configuration = (current_configuration.has_feature(feature.get_name()))
 					&& is_valid_configuration;
 	}
@@ -46,7 +47,7 @@ void AdvancedCoffeeMakers::alternative_check(const std::vector<Feature>& sub_fea
 	{
 		Feature feature = sub_features[j];
 
-		if(feature.get_feature_type() == Commons::FeatureType::Alternative)
+		if (feature.get_feature_type() == Commons::FeatureType::Alternative)
 		{
 			if (current_configuration.has_feature(feature.get_name()) && !(is_valid_xor))
 				is_valid_xor = true;
@@ -68,7 +69,7 @@ void AdvancedCoffeeMakers::or_check(const std::vector<Feature>& sub_features)
 	{
 		Feature feature = sub_features[j];
 
-		if(feature.get_feature_type() == Commons::FeatureType::Or)
+		if (feature.get_feature_type() == Commons::FeatureType::Or)
 		{
 			if (current_configuration.has_feature(feature.get_name()))
 				is_valid_or = true;
@@ -76,7 +77,6 @@ void AdvancedCoffeeMakers::or_check(const std::vector<Feature>& sub_features)
 	}
 	is_valid_configuration = is_valid_configuration & is_valid_or;
 }
-
 
 void AdvancedCoffeeMakers::add_to_output_stream()
 {

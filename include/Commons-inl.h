@@ -41,7 +41,6 @@ std::string Commons::remove_question_mark(std::string name)
 	if (name.find(static_cast<char>(FeatureType::Optional)) == NOT_FOUND)
 		return name;
 	return name.substr(OPTIONAL_SIGN_INDEX);
-
 }
 
 Commons::DelimiterType Commons::get_delimiter_type(char delimiter)
@@ -58,7 +57,7 @@ Commons::DelimiterType Commons::get_delimiter_type(char delimiter)
 			return DelimiterType::Or;
 
 		default:
-			throw BAD_DELIMITER_EXCEPTION();
+			throw BadDelimiterException();
 	}
 }
 
@@ -78,7 +77,7 @@ Commons::FeatureType Commons::get_feature_type(std::string name, char delimiter)
 			return FeatureType::Or;
 
 		default:
-			throw BAD_DELIMITER_EXCEPTION();
+			throw BadDelimiterException();
 	}
 }
 

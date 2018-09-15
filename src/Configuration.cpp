@@ -15,11 +15,11 @@ void Configuration::parse_configuration(string line) noexcept
 		Commons::tokenize(tokens, line, DELIMITER);
 		configuration = tokens;
 	}
-	catch (BAD_DELIMITER_EXCEPTION)
+	catch (BadDelimiterException)
 	{
 		cerr << "No valid delimiter found!" << endl;
 	}
-	catch (BAD_CONFIGURAION_STYLE_EXCEPTION)
+	catch (BadConfiguraionStyleException)
 	{
 		cerr << "Invalid configuraion style!" << endl;
 	}

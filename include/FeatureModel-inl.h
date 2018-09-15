@@ -5,6 +5,11 @@
 #error "FeatureModel-inl.h" should be included only in "FeatureModel.h" file.
 #endif
 
+#include <vector>
+#include <string>
+#include <utility>
+#include <map>
+
 typedef std::map<std::string, std::pair<Commons::DelimiterType, std::vector<Feature>>>
 		FeatureModelMap;
 
