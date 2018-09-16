@@ -43,7 +43,7 @@ std::string Commons::remove_question_mark(const std::string& name) noexcept
 	return name.substr(OPTIONAL_SIGN_INDEX);
 }
 
-std::string Commons::remove_extra_brackets(const std::string& line) noexcept
+std::string Commons::remove_extra_brackets(const std::string& line)
 {
 	constexpr uint8_t USELESS_OPEN_BRACKET_INDEX = 1;
 	constexpr uint8_t MINIMUM_SIZE = 2;

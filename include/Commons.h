@@ -46,8 +46,7 @@ public:
 	inline static DelimiterType get_delimiter_type(const char delimiter);
 	inline static std::string remove_question_mark(const std::string& name)
 			noexcept;
-	inline static std::string remove_extra_brackets(const std::string& line)
-			noexcept;
+	inline static std::string remove_extra_brackets(const std::string& line);
 };
 
 #include "Commons-inl.h"
