@@ -6,4 +6,5 @@ int main()
 			AdvancedCoffeeMakers::get_instance();
 	instance->process();
 	instance->print_result();
+	return 0;
 }
