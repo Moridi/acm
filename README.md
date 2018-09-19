@@ -1,7 +1,6 @@
-    Advanced Coffee Makers
-##
-Problem
-##
+Advanced Coffee Makers
+======================
+
 Advanced Coffee Makers (ACM) Company holds a large portion of the coffee vending machine market.
 Facing with numerous variations of coffee machines that the market demands for, ACM tries to develop a
 product line, so that each time a customer requests for a specific configuration of coffee machines, it can
@@ -37,6 +36,7 @@ Your program must input a feature model, together with a set of configurations, 
 determines whether the configuration is valid.
 ##
 Input
+=====
 
 The input consists of a number of test cases. Each test case has two parts. The first part represents the
 feature model and the second part lists the configurations to be validated. The feature model is described
@@ -60,13 +60,13 @@ of the form {F1, F2, ..., Fn}, where Fi is a feature name, and n > 0. You may as
 appeared in the feature model description. The last line of the test case is a single line containing ##.
 ##
 Output
-
+======
 For each configuration in each test case, print one line in the output containing either Valid or Invalid
 words, indicating whether the corresponding configuration is valid. Print a line containing ## after the
 output for each test case.
 ##
 Sample Input
-
+============
 2
 
 CoffeeMachine=Brewer+CoffeeMaker+Creamer+?TeaMaker
